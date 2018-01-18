@@ -7,9 +7,9 @@ FACEBOOK_VERIFY_TOKEN = "Shivansh"
 def index():
     return "Hello World"
 
-@app.route("/webhook")
+@app.route("/webhook",methods = ['POST', 'GET'])
 def webhook():
-	return jsonify(res = request.args)
+	return jsonify(res = request)
 	# query = request.args.get('query')
 	# if query['hub.verify_token'] == FACEBOOK_VERIFY_TOKEN:
 	# 	return query['hub.challenge']
