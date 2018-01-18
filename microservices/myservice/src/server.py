@@ -2,12 +2,13 @@ from src import app
 from flask import jsonify, request
 
 FACEBOOK_VERIFY_TOKEN = "Shivansh"
+FACEBOOK_PAGE_ACCESS_TOKEN = "EAAM3vu6VfC4BAMhnoJvCtSpQxCcBJBzMeBTbJL9crcm9fVdNp6lxPrZC153KbDPHl3ZCQWMSYU6lQbx5C2dByqhFzPw4z0fH4sJAjLF3YqZBlbkALfTT4UFE3F5OZBUOZCyTdZAGGc6W6BQoUwI9fyC9sk8TeYXZCnwBpoHeZCsL7DK8AlJ3MBTL"
 
 @app.route("/")
 def index():
     return "Hello World"
 
-@app.route("/webhook")
+@app.route("/webhook", method = 'GET')
 def webhook():
 	verify_token = request.args.get('hub.verify_token')
 	challenge = request.args.get('hub.challenge')
@@ -15,6 +16,10 @@ def webhook():
 		return challenge
 	else:
 		return "Error"
+
+@app.route("/webhook", method = 'POST')
+def webhook():
+	return request.args
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
