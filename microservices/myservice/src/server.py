@@ -19,8 +19,8 @@ def webhook():
 			return "Error"
 	else:
 		res = request.json
-		# print(res['entry'][0]['message']['text'])
-		print((request.json))
+		print(res['entry'][0]['messaging'][0]['message']['text'])
+		print(res)
 		return jsonify(request.json)
 
 # @app.route("/webhook", methods = ['POST'])
