@@ -18,7 +18,7 @@ def webhook():
 		else:
 			return "Error"
 	else:
-		return jsonify(request.args.get('body'))
+		return jsonify(request.args)
 
 # @app.route("/webhook", methods = ['POST'])
 # def message():
