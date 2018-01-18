@@ -19,7 +19,7 @@ def webhook():
 
 @app.route("/webhook", methods = ['POST'])
 def message():
-	return request.args 
+	return "Hi"
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
