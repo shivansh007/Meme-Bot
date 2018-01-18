@@ -15,7 +15,7 @@ def webhook():
 	if verify_token == FACEBOOK_VERIFY_TOKEN:
 		return challenge
 	else:
-		return request.args
+		return request.args.get('body')
 
 # @app.route("/webhook", methods = ['POST'])
 # def message():
