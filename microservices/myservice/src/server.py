@@ -18,7 +18,7 @@ def webhook():
 		return "Error"
 
 @app.route("/webhook", methods = ['POST'])
-def webhook():
+def message():
 	return request.args 
 # Uncomment to add a new URL at /new
 
