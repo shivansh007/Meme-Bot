@@ -9,11 +9,12 @@ def index():
 
 @app.route("/webhook")
 def webhook():
-	query = request.args.get('query')
-	if query['hub.verify_token'] == FACEBOOK_VERIFY_TOKEN:
-		return query['hub.challenge']
-	else:
-		return "Error"
+	return jsonify(res = request.args)
+	# query = request.args.get('query')
+	# if query['hub.verify_token'] == FACEBOOK_VERIFY_TOKEN:
+	# 	return query['hub.challenge']
+	# else:
+	# 	return "Error"
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
