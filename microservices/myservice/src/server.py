@@ -9,8 +9,8 @@ def index():
     return "Hello World"
 
 @app.route("/webhook", methods = ['POST'])
-def message():
-	return "Hi"
+def webhook():
+	return request.args
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
