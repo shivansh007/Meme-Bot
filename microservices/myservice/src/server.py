@@ -36,6 +36,5 @@ def webhook():
 				}
 			}
 		}
-		js = jsonify(data)
-		print(js)
-		return js
+		request(data)
+		return "Done"
