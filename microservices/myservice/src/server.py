@@ -25,4 +25,4 @@ def webhook():
 		return sendMsg(sid, msg)
 
 def sendMsg(senderId, msg):
-	return request(url = FACEBOOK_SEND_URL, method = 'POST', json = jsonify(messaging_type = "RESPONSE", recipient = jsonify(id = senderId), message = jsonify(text = msg)))
+	return jsonify(url = FACEBOOK_SEND_URL, method = 'POST', json = jsonify(messaging_type = "RESPONSE", recipient = jsonify(id = senderId), message = jsonify(text = msg)))
