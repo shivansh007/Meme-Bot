@@ -5,7 +5,7 @@ FACEBOOK_VERIFY_TOKEN = "Shivansh"
 
 @app.route("/")
 def index():
-    return "Hasura Hello World"
+    return "Hello World"
 
 @app.route("/webhook")
 def webhook():
