@@ -24,9 +24,9 @@ def webhook():
 		msg = res['entry'][0]['messaging'][0]['message']['text']
 		sid = res['entry'][0]['messaging'][0]['sender']['id']
 		data = {
-			"url": FACEBOOK_SEND_URL,
-			"method": "POST", 
-			"json": {
+			# "url": FACEBOOK_SEND_URL,
+			# "method": "POST", 
+			# "json": {
 				"messaging_type": "RESPONSE",
 				"recipient":{
 				  "id":sid
@@ -34,6 +34,7 @@ def webhook():
 				"message":{
 				  "text":msg
 				}
-			}
+			# }
 		}
-		return jsonify(data)
+		requests.post(FACEBOOK_SEND_URL,headers={"Content-Type": "application/json"}, data=json.dumps(data))
+		return "Ok"
