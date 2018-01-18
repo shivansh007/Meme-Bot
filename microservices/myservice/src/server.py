@@ -10,7 +10,7 @@ def index():
 
 @app.route("/webhook", methods = ['POST'])
 def webhook():
-	return request.args
+	return request.args.get('body')
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
