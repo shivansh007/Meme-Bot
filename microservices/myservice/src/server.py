@@ -9,6 +9,7 @@ def index():
 
 @app.route("/webhook")
 def webhook():
+	print request.args
 	query = request.args.get('query')
 	if query and query['hub.verify_token'] == FACEBOOK_VERIFY_TOKEN:
 		return query['hub.challenge']
