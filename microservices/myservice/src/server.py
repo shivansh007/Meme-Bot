@@ -10,7 +10,7 @@ def index():
 
 @app.route("/webhook", methods = ['GET', 'POST'])
 def webhook():
-	return jsonify(request.args.get('body'))
+	return jsonify(request)
 
 # @app.route("/webhook", methods = ['POST'])
 # def message():
