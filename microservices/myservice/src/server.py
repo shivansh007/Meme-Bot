@@ -10,7 +10,15 @@ def index():
 
 @app.route("/webhook", methods = ['GET', 'POST'])
 def webhook():
-	return jsonify(request.method)
+	if request.method == "GET":
+		verify_token = request.args.get('hub.verify_token')
+		challenge = request.args.get('hub.challenge')
+		if verify_token == FACEBOOK_VERIFY_TOKEN:
+			return challenge
+		else:
+			return "Error"
+	else:
+		return jsonify(request.args.get('body')
 
 # @app.route("/webhook", methods = ['POST'])
 # def message():
