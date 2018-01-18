@@ -8,7 +8,7 @@ FACEBOOK_PAGE_ACCESS_TOKEN = "EAAM3vu6VfC4BAMhnoJvCtSpQxCcBJBzMeBTbJL9crcm9fVdNp
 def index():
     return "Hello World"
 
-@app.route("/webhook", method = 'GET')
+@app.route("/webhook", methods = ['GET'])
 def webhook():
 	verify_token = request.args.get('hub.verify_token')
 	challenge = request.args.get('hub.challenge')
@@ -17,9 +17,9 @@ def webhook():
 	else:
 		return "Error"
 
-@app.route("/webhook", method = 'POST')
+@app.route("/webhook", methods = ['POST'])
 def webhook():
-	return request.args
+	return request.args 
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
