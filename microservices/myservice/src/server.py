@@ -36,5 +36,4 @@ def webhook():
 				}
 			}
 		}
-		request(data)
-		return "Done"
+		return jsonify(data)
