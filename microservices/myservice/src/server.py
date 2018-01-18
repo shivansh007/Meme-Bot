@@ -9,10 +9,10 @@ def index():
 
 @app.route("/webhook")
 def webhook():
-	print(request.args.get('hub.challenge'))
-	query = request.args.get('query')
-	if query and query[0]['hub.verify_token'] == FACEBOOK_VERIFY_TOKEN:
-		return query[0]['hub.challenge']
+	verify_token = request.args.get('hub.verify_token')
+	challenge = request.args.get('hub.challenge')
+	if verify_token == FACEBOOK_VERIFY_TOKEN:
+		return challenge
 	else:
 		return "Error"
 # Uncomment to add a new URL at /new
