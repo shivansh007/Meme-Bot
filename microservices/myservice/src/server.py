@@ -20,21 +20,22 @@ def webhook():
 			return "Error"
 	else:
 		res = request.json
-		msg = res['entry'][0]['messaging'][0]['message']['text']
-		sid = res['entry'][0]['messaging'][0]['sender']['id']
-		data = {
-			"url": FACEBOOK_SEND_URL,
-			"method": "POST", 
-			"json": {
-				"messaging_type": "RESPONSE",
-				"recipient":{
-				  "id":sid
-				},
-				"message":{
-				  "text":msg
-				}
-			}
-		}
-		js = jsonify(data)
-		print(js)
-		return request(js)
+		print(res)
+		# msg = res['entry'][0]['messaging'][0]['message']['text']
+		# sid = res['entry'][0]['messaging'][0]['sender']['id']
+		# data = {
+		# 	"url": FACEBOOK_SEND_URL,
+		# 	"method": "POST", 
+		# 	"json": {
+		# 		"messaging_type": "RESPONSE",
+		# 		"recipient":{
+		# 		  "id":sid
+		# 		},
+		# 		"message":{
+		# 		  "text":msg
+		# 		}
+		# 	}
+		# }
+		# js = jsonify(data)
+		# print(js)
+		return "request(js)"
