@@ -1,11 +1,18 @@
 from src import app
 # from flask import jsonify
 
+FACEBOOK_VERIFY_TOKEN = "Shivansh"
 
 @app.route("/")
-def home():
+def index():
     return "Hasura Hello World"
 
+@app.route("/webhook")
+def webhook():
+	if request.query['hub.verify_token'] == FACEBOOK_VERIFY_TOKEN:
+		return request.query['hub.challenge']
+	else:
+		return "Error"
 # Uncomment to add a new URL at /new
 
 # @app.route("/json")
