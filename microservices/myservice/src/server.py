@@ -3,6 +3,7 @@ from flask import jsonify, request
 
 FACEBOOK_VERIFY_TOKEN = "Shivansh"
 FACEBOOK_PAGE_ACCESS_TOKEN = "EAAM3vu6VfC4BAMhnoJvCtSpQxCcBJBzMeBTbJL9crcm9fVdNp6lxPrZC153KbDPHl3ZCQWMSYU6lQbx5C2dByqhFzPw4z0fH4sJAjLF3YqZBlbkALfTT4UFE3F5OZBUOZCyTdZAGGc6W6BQoUwI9fyC9sk8TeYXZCnwBpoHeZCsL7DK8AlJ3MBTL"
+FACEBOOK_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
 
 @app.route("/")
 def index():
@@ -19,15 +20,9 @@ def webhook():
 			return "Error"
 	else:
 		res = request.json
-		print(res['entry'][0]['messaging'][0]['message']['text'])
-		print(res)
-		return jsonify(request.json)
+		msg = res['entry'][0]['messaging'][0]['message']['text']
+		sid = res['entry'][0]['messaging'][0]['sender']['id']
+		return sendMsg(sid, msg)
 
-# @app.route("/webhook", methods = ['POST'])
-# def message():
-# 	return request.args 
-# Uncomment to add a new URL at /new
-
-# @app.route("/json")
-# def json_message():
-#     return jsonify(message="Hello World")
+def sendMsg(senderId, msg):
+	return request(url = FACEBOOK_SEND_URL, method = 'POST', json = jsonify(messaging_type = "RESPONSE", recipient = jsonify(id = senderId), message = jsonify(text = msg)))
