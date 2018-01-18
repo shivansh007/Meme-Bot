@@ -19,7 +19,7 @@ def webhook():
 			return "Error"
 	else:
 		res = request.json
-		print(res['entry'][0]['message']['text'])
+		# print(res['entry'][0]['message']['text'])
 		print((request.json))
 		return jsonify(request.json)
 
