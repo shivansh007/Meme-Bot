@@ -8,15 +8,6 @@ FACEBOOK_PAGE_ACCESS_TOKEN = "EAAM3vu6VfC4BAMhnoJvCtSpQxCcBJBzMeBTbJL9crcm9fVdNp
 def index():
     return "Hello World"
 
-@app.route("/webhook", methods = ['GET'])
-def webhook():
-	verify_token = request.args.get('hub.verify_token')
-	challenge = request.args.get('hub.challenge')
-	if verify_token == FACEBOOK_VERIFY_TOKEN:
-		return challenge
-	else:
-		return "Error"
-
 @app.route("/webhook", methods = ['POST'])
 def message():
 	return "Hi"
