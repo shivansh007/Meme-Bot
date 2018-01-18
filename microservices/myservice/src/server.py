@@ -1,5 +1,5 @@
 from src import app
-from flask import jsonify, request
+from flask import jsonify, request, Response
 
 FACEBOOK_VERIFY_TOKEN = "Shivansh"
 FACEBOOK_PAGE_ACCESS_TOKEN = "EAAM3vu6VfC4BAMhnoJvCtSpQxCcBJBzMeBTbJL9crcm9fVdNp6lxPrZC153KbDPHl3ZCQWMSYU6lQbx5C2dByqhFzPw4z0fH4sJAjLF3YqZBlbkALfTT4UFE3F5OZBUOZCyTdZAGGc6W6BQoUwI9fyC9sk8TeYXZCnwBpoHeZCsL7DK8AlJ3MBTL"
@@ -22,5 +22,19 @@ def webhook():
 		res = request.json
 		msg = res['entry'][0]['messaging'][0]['message']['text']
 		sid = res['entry'][0]['messaging'][0]['sender']['id']
-		print(jsonify(url = FACEBOOK_SEND_URL, method = 'POST', json = jsonify(messaging_type = "RESPONSE", recipient = jsonify(id = sid), message = jsonify(text = msg))))
-		return jsonify(url = FACEBOOK_SEND_URL, method = 'POST', json = jsonify(messaging_type = "RESPONSE", recipient = jsonify(id = sid), message = jsonify(text = msg)))
+		data = {
+			"url": FACEBOOK_SEND_URL,
+			"method": "POST", 
+			"json": {
+				"messaging_type": "RESPONSE",
+				"recipient":{
+				  "id":sid
+				},
+				"message":{
+				  "text":msg
+				}
+			}
+		}
+		js = jsonify(data)
+		print(js)
+		return Response(js)
