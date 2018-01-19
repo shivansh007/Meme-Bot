@@ -69,5 +69,5 @@ def reply(msg, entities, rid):
 def get_user_data(rid):
 	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + rid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
 	res = requests.get(FACEBOOK_USER_PROFILE, headers = { "Content-Type": "application/json" })
-	print(res)
+	print(jsonify(res))
 		
