@@ -26,6 +26,8 @@ def webhook():
 			for entry in data["entry"]:
 				for messaging_event in entry["messaging"]:
 					if messaging_event.get("message"):  
+						if messaging_event['message']['is_echo']:
+							return
 						msg = messaging_event['message']['text']
 						sid = messaging_event['sender']['id']
 						rid = messaging_event['recipient']['id']
