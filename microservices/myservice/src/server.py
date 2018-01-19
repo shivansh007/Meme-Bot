@@ -58,7 +58,7 @@ def reply(msg, entities, rid):
 	for i in entities.keys():
 		nlp[i] = entities[i][0]['confidence']
 	if max(nlp) == "greetings":
-		return "Hello" + name
+		return "Hello " + name
 	elif max(nlp) == "thanks":
 		return "You're welcome!"
 	elif max(nlp) == "bye":
