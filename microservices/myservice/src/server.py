@@ -31,7 +31,7 @@ def webhook():
 						if messaging_event['message'].get('nlp'):
 							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
 						else:
-							entities = dict()
+							entities = { 'none' : 1 }
 						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities)))
 		return "Ok"
 
@@ -50,6 +50,8 @@ def send_message(sid, msg):
 	return json.dumps(data)
 
 def reply(msg, entities):
+	if(entities['none']):
+		return msg
 	nlp = dict()
 	for i in entities.keys():
 		nlp[i] = entities[i][0]['confidence']
@@ -61,4 +63,4 @@ def reply(msg, entities):
 		return "See you"
 	else:
 		return max(nlp)
-	
+		
