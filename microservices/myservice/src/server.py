@@ -33,7 +33,7 @@ def webhook():
 							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
 						else:
 							entities = {}
-						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities, rid)))
+						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities, sid)))
 		return "Ok"
 
 def send_message(sid, msg):
