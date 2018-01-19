@@ -27,7 +27,7 @@ def webhook():
 					if messaging_event.get("message"):  
 						msg = data['entry'][0]['messaging'][0]['message']['text']
 						sid = data['entry'][0]['messaging'][0]['sender']['id']
-						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, msg))
+						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg)))
 		return "Ok"
 
 def send_message(sid, msg):
@@ -43,3 +43,7 @@ def send_message(sid, msg):
 				}
 			}
 	return json.dumps(data)
+
+def reply(msg):
+	if msg == "Hi":
+		return "Hello"
