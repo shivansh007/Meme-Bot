@@ -41,7 +41,7 @@ def webhook():
 def reply(msg, entities, sid):
 	name = get_user_data(sid)
 	if not entities:
-		return send_message(sid, msg)
+		return send_image(sid)
 	nlp = dict()
 	for i in entities.keys():
 		nlp[i] = entities[i][0]['confidence']
@@ -68,10 +68,10 @@ def send_message(sid, msg):
 			}
 	return json.dumps(data)
 
-def send_image():
+def send_image(sid):
 	data = {
 			  "recipient":{
-			    			"id":"1899726730051482"
+			    			"id":sid
 						  },
 			  "message":{
 					       "attachment":{
