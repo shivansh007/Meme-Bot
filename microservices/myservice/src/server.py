@@ -77,7 +77,7 @@ def send_image(sid):
 					       "attachment":{
 			    				"type":"image", 
 			    					"payload":{
-			        				"url":get_image, 
+			        				"url":get_image(), 
 			        				"is_reusable":True
 			    				      		  }
 			    				         }
