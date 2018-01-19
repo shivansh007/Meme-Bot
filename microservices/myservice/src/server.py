@@ -96,12 +96,13 @@ def send_image(sid, search):
 			    				         }
 						}
 			}
+	print(data)		
 	return json.dumps(data)
 
 def get_image(search):
 		url = "https://api.imgur.com/3/gallery/search/?q='" + search +" memes'"
 		res = requests.get(url, headers = { "Authorizaion": "Client-ID e21842678284d02" })
-		print(url, res.json())
+		# print(url, res.json())
 		if 'error' in res.json()["data"]:
 			return "Not Found"
 		return res.json()["data"][0]["images"][0]["link"]
