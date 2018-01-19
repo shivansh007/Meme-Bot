@@ -77,13 +77,20 @@ def send_image(sid):
 					       "attachment":{
 			    				"type":"image", 
 			    					"payload":{
-			        				"url":"https://www.w3schools.com/w3images/lights.jpg", 
+			        				"url":get_image, 
 			        				"is_reusable":True
 			    				      		  }
 			    				         }
 						}
 			}
 	return json.dumps(data)
+
+def get_image():
+	res = requests.get("https://api.imgur.com/3/gallery/search/?q=memes", headers = { "Authorizaion": "Client-ID e21842678284d02" })
+	return res.json()["data"][0]["images"][0]["link"]
+# https://api.imgur.com/3/gallery/search/?q=memes
+# Authorizaion Client-ID e21842678284d02
+# data[0][images][0][link]
 
 def get_user_data(rid):
 	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + rid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
