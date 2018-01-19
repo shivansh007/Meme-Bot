@@ -39,7 +39,19 @@ def webhook():
 							requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply(msg, entities, sid))
 			return "Ok"
 		except:
-			requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply("Error", entities, sid))
+			data = {
+				"messaging_type": "RESPONSE",
+				"recipient":
+				{
+					"id": "1899726730051482"
+				},
+				"message":
+				{
+					"text": "Error"
+				}
+			}
+			data = json.dumps(data)
+			requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = data)
 
 
 def reply(msg, entities, sid):
