@@ -78,7 +78,7 @@ def send_image(sid):
 			    				"type":"image", 
 			    					"payload":{
 			        				"url":"https://www.w3schools.com/w3images/lights.jpg", 
-			        				"is_reusable":true
+			        				"is_reusable":True
 			    				      		  }
 			    				         }
 						}
