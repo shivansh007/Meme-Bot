@@ -88,11 +88,11 @@ def send_image(sid, search):
 						  },
 			  "message":{
 					       "attachment":{
-			    				"type":"image", 
-			    					"payload":{
-			        				"url":img_url, 
-			        				"is_reusable":True
-			    				      		  }
+			    							"type":"image", 
+			    							"payload":{
+			        									"url":img_url, 
+								        				"is_reusable":"True"
+			    						      		  }
 			    				         }
 						}
 			}
@@ -101,7 +101,7 @@ def send_image(sid, search):
 
 def get_image(search):
 		url = "https://api.imgur.com/3/gallery/search/?q='" + search +" memes'"
-		res = requests.get(url, headers = { "Authorizaion": "Client-ID e21842678284d02" })
+		res = requests.get('GET', url, headers = { "Authorizaion": "Client-ID e21842678284d02", "Content-Type", "application/json" })
 		# print(url, res.json())
 		if 'error' in res.json()["data"]:
 			return "Not Found"
