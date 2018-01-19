@@ -20,22 +20,26 @@ def webhook():
 		else:
 			return "Error"
 	else:
-		res = request.json
-		print(res)
-		msg = res['entry'][0]['messaging'][0]['message']['text']
-		sid = res['entry'][0]['messaging'][0]['sender']['id']
-		data = {
-			# "url": FACEBOOK_SEND_URL,
-			# "method": "POST", 
-			# "json": {
-				"messaging_type": "RESPONSE",
-				"recipient":{
-				  "id":sid
-				},
-				"message":{
-				  "text":msg
-				}
-			# }
-		}
-		requests.post(FACEBOOK_SEND_URL,headers={"Content-Type": "application/json"}, data=json.dumps(data))
+		data = request.json
+    	if data["object"] == "page":
+        	for entry in data["entry"]:
+            	for messaging_event in entry["messaging"]:
+                	if messaging_event.get("message"):  
+						msg = res['entry'][0]['messaging'][0]['message']['text']
+						sid = res['entry'][0]['messaging'][0]['sender']['id']
+		requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, msg))
 		return "Ok"
+
+def send_message(sid, msg):
+	data = {
+				"messaging_type": "RESPONSE",
+				"recipient":
+				{
+				 	"id": sid
+				},
+				"message":
+				{
+				  	"text": msg
+				}
+			}
+	return json.dumps(data)
