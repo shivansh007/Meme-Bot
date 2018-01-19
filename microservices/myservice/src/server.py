@@ -50,7 +50,7 @@ def send_message(sid, msg):
 	return json.dumps(data)
 
 def reply(msg, entities):
-	if(entities['none']):
+	if 'none' in entities.keys():
 		return msg
 	nlp = dict()
 	for i in entities.keys():
