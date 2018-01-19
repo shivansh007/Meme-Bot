@@ -51,14 +51,14 @@ def send_message(sid, msg):
 	return json.dumps(data)
 
 def reply(msg, entities, rid):
-	get_user_data(rid)
+	name = get_user_data(rid)
 	if not entities:
 		return msg
 	nlp = dict()
 	for i in entities.keys():
 		nlp[i] = entities[i][0]['confidence']
 	if max(nlp) == "greetings":
-		return "Hello"
+		return "Hello" + name
 	elif max(nlp) == "thanks":
 		return "You're welcome!"
 	elif max(nlp) == "bye":
@@ -69,5 +69,5 @@ def reply(msg, entities, rid):
 def get_user_data(rid):
 	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + rid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
 	res = requests.get(FACEBOOK_USER_PROFILE, headers = { "Content-Type": "application/json" })
-	print(res.text)
+	return res['first_name']
 		
