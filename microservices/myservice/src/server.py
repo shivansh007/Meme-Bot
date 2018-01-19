@@ -33,8 +33,24 @@ def webhook():
 							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
 						else:
 							entities = {}
-						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities, sid)))
+						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply(msg, entities, sid))
 		return "Ok"
+
+def reply(msg, entities, sid):
+	name = get_user_data(sid)
+	if not entities:
+		return send_message(sid, msg)
+	nlp = dict()
+	for i in entities.keys():
+		nlp[i] = entities[i][0]['confidence']
+	if max(nlp) == "greetings":
+		return send_message(sid, "Hello " + name)
+	elif max(nlp) == "thanks":
+		return send_message(sid, "You're welcome!")
+	elif max(nlp) == "bye":
+		return send_message(sid, "See you")
+	else:
+		return send_message(sid, max(nlp))
 
 def send_message(sid, msg):
 	data = {
@@ -50,21 +66,22 @@ def send_message(sid, msg):
 			}
 	return json.dumps(data)
 
-def reply(msg, entities, rid):
-	name = get_user_data(rid)
-	if not entities:
-		return msg
-	nlp = dict()
-	for i in entities.keys():
-		nlp[i] = entities[i][0]['confidence']
-	if max(nlp) == "greetings":
-		return "Hello " + name
-	elif max(nlp) == "thanks":
-		return "You're welcome!"
-	elif max(nlp) == "bye":
-		return "See you"
-	else:
-		return max(nlp)
+def send_image():
+	data = {
+			  "recipient":{
+			    			"id":"1899726730051482"
+						  },
+			  "message":{
+					       "attachment":{
+			    				"type":"image", 
+			    					"payload":{
+			        				"url":"https://www.w3schools.com/w3images/lights.jpg", 
+			        				"is_reusable":true
+			    				      		  }
+			    				         }
+						}
+			}
+	return json.dumps(data)
 
 def get_user_data(rid):
 	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + rid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
