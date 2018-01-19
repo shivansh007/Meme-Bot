@@ -8,7 +8,7 @@ FACEBOOK_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=" 
 
 @app.route("/")
 def index():
-	return "Hello World"
+	return "Check out MemeBot on Facebook"
 
 @app.route("/webhook", methods = ['GET', 'POST'])
 def webhook():
@@ -18,11 +18,10 @@ def webhook():
 		if verify_token == FACEBOOK_VERIFY_TOKEN:
 			return challenge
 		else:
-			return "Error"
+			return "Authentication error"
 	else:
 		try:
 			data = request.json
-			print(data)
 			if data["object"] == "page":
 				for entry in data["entry"]:
 					for messaging_event in entry["messaging"]:
@@ -52,6 +51,7 @@ def webhook():
 			}
 			data = json.dumps(data)
 			requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = data)
+			return "Ok"
 
 
 def reply(msg, entities, sid):
