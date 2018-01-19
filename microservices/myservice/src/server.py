@@ -20,23 +20,27 @@ def webhook():
 		else:
 			return "Error"
 	else:
-		data = request.json
-		print(data)
-		if data["object"] == "page":
-			for entry in data["entry"]:
-				for messaging_event in entry["messaging"]:
-					if messaging_event.get("message"):  
-						if 'is_echo' in messaging_event['message'].keys():
-							return "Ok"
-						msg = messaging_event['message']['text']
-						sid = messaging_event['sender']['id']
-						rid = messaging_event['recipient']['id']
-						if messaging_event['message'].get('nlp'):
-							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
-						else:
-							entities = {}
-						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply(msg, entities, sid))
-		return "Ok"
+		try:
+			data = request.json
+			print(data)
+			if data["object"] == "page":
+				for entry in data["entry"]:
+					for messaging_event in entry["messaging"]:
+						if messaging_event.get("message"):  
+							if 'is_echo' in messaging_event['message'].keys():
+								return "Ok"
+							msg = messaging_event['message']['text']
+							sid = messaging_event['sender']['id']
+							rid = messaging_event['recipient']['id']
+							if messaging_event['message'].get('nlp'):
+								entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
+							else:
+								entities = {}
+							requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply(msg, entities, sid))
+			return "Ok"
+		except:
+			requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply("Error", entities, sid))
+
 
 def reply(msg, entities, sid):
 	name = get_user_data(sid)
