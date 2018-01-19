@@ -86,7 +86,9 @@ def send_image(sid, search):
 	return json.dumps(data)
 
 def get_image(search):
-	res = requests.get("https://api.imgur.com/3/gallery/search/?q='" + search +" memes'", headers = { "Authorizaion": "Client-ID e21842678284d02" })
+	url = "https://api.imgur.com/3/gallery/search/?q='" + search +" memes'"
+	res = requests.get(url, headers = { "Authorizaion": "Client-ID e21842678284d02" })
+	print(url, res.json())
 	return res.json()["data"][0]["images"][0]["link"]
 
 def get_user_data(rid):
