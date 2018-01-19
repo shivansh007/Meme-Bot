@@ -28,11 +28,12 @@ def webhook():
 					if messaging_event.get("message"):  
 						msg = messaging_event['message']['text']
 						sid = messaging_event['sender']['id']
+						rid = messaging_event['recipient']['id']
 						if messaging_event['message'].get('nlp'):
 							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
 						else:
 							entities = {}
-						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities)))
+						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities, rid)))
 		return "Ok"
 
 def send_message(sid, msg):
@@ -49,7 +50,8 @@ def send_message(sid, msg):
 			}
 	return json.dumps(data)
 
-def reply(msg, entities):
+def reply(msg, entities, rid):
+	get_user_data(rid)
 	if not entities:
 		return msg
 	nlp = dict()
@@ -63,4 +65,9 @@ def reply(msg, entities):
 		return "See you"
 	else:
 		return max(nlp)
+
+def get_user_data(rid):
+	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + sid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
+	res = requests.post(FACEBOOK_USER_PROFILE, headers = { "Content-Type": "application/json" })
+	print(res)
 		
