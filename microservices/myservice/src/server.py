@@ -41,7 +41,7 @@ def webhook():
 def reply(msg, entities, sid):
 	name = get_user_data(sid)
 	if not entities:
-		return send_image(sid)
+		return send_image(sid, msg)
 	nlp = dict()
 	for i in entities.keys():
 		nlp[i] = entities[i][0]['confidence']
@@ -68,7 +68,7 @@ def send_message(sid, msg):
 			}
 	return json.dumps(data)
 
-def send_image(sid):
+def send_image(sid, search):
 	data = {
 			  "recipient":{
 			    			"id":sid
@@ -77,7 +77,7 @@ def send_image(sid):
 					       "attachment":{
 			    				"type":"image", 
 			    					"payload":{
-			        				"url":get_image(), 
+			        				"url":get_image(search), 
 			        				"is_reusable":True
 			    				      		  }
 			    				         }
@@ -85,13 +85,9 @@ def send_image(sid):
 			}
 	return json.dumps(data)
 
-def get_image():
-	res = requests.get("https://api.imgur.com/3/gallery/search/?q=memes", headers = { "Authorizaion": "Client-ID e21842678284d02" })
-	print(res.json()["data"])
+def get_image(search):
+	res = requests.get("https://api.imgur.com/3/gallery/search/?q='" + search +" memes'", headers = { "Authorizaion": "Client-ID e21842678284d02" })
 	return res.json()["data"][0]["images"][0]["link"]
-# https://api.imgur.com/3/gallery/search/?q=memes
-# Authorizaion Client-ID e21842678284d02
-# data[0][images][0][link]
 
 def get_user_data(rid):
 	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + rid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
