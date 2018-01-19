@@ -47,7 +47,15 @@ def send_message(sid, msg):
 	return json.dumps(data)
 
 def reply(msg, entities):
+	nlp = dict()
 	for i in entities.keys():
-		print(i,entities[i][0]['confidence'])
-	if msg == "Hi":
+		nlp[i] = entities[i][0]['confidence']
+	if max(nlp) == "greetings":
 		return "Hello"
+	elif max(nlp) == "thanks":
+		return "You're welcome!"
+	elif max(nlp) == "bye":
+		return "See you"
+	else:
+		return max(nlp)
+	
