@@ -69,6 +69,19 @@ def send_message(sid, msg):
 	return json.dumps(data)
 
 def send_image(sid, search):
+	img_url = get_image(search)
+	if img_url == "Not Found":
+		return json.dumps({
+				"messaging_type": "RESPONSE",
+				"recipient":
+				{
+					"id": sid
+				},
+				"message":
+				{
+					"text": "Error"
+				}
+			})
 	data = {
 			  "recipient":{
 			    			"id":sid
@@ -77,7 +90,7 @@ def send_image(sid, search):
 					       "attachment":{
 			    				"type":"image", 
 			    					"payload":{
-			        				"url":get_image(search), 
+			        				"url":img_url, 
 			        				"is_reusable":True
 			    				      		  }
 			    				         }
