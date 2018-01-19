@@ -47,6 +47,7 @@ def send_message(sid, msg):
 	return json.dumps(data)
 
 def reply(msg, entities):
-	print(entities)
+	for i in entities.keys():
+		print(i,entities[i][0]['confidence'])
 	if msg == "Hi":
 		return "Hello"
