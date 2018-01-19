@@ -79,6 +79,18 @@ def send_image(sid, search):
 				},
 				"message":
 				{
+					"text": "No memes for " + search
+				}
+			})
+	if img_url == "Error":
+		return json.dumps({
+				"messaging_type": "RESPONSE",
+				"recipient":
+				{
+					"id": sid
+				},
+				"message":
+				{
 					"text": "Error"
 				}
 			})
@@ -104,6 +116,8 @@ def get_image(search):
 		res = requests.request(url = url, method = 'GET', headers = { "Authorization": "Client-ID e21842678284d02", "Content-Type": "application/json" })
 		# print(url, res.json())
 		if 'error' in res.json()["data"]:
+			return "Error"
+		if 'images' not in res.json()["data"][0]:
 			return "Not Found"
 		return res.json()["data"][0]["images"][0]["link"]
 
