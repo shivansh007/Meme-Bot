@@ -26,9 +26,9 @@ def webhook():
 			for entry in data["entry"]:
 				for messaging_event in entry["messaging"]:
 					if messaging_event.get("message"):  
-						msg = data['entry'][0]['messaging'][0]['message']['text']
-						sid = data['entry'][0]['messaging'][0]['sender']['id']
-						if data['entry'][0]['messaging'][0]['message']['nlp']:
+						msg = messaging_event['message']['text']
+						sid = messaging_event['sender']['id']
+						if messaging_event['message'].get('nlp'):
 							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
 						else:
 							entities = { "none" : 0 }
