@@ -27,8 +27,11 @@ def webhook():
 				for messaging_event in entry["messaging"]:
 					if messaging_event.get("message"):  
 						msg = data['entry'][0]['messaging'][0]['message']['text']
-						entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
 						sid = data['entry'][0]['messaging'][0]['sender']['id']
+						if data['entry'][0]['messaging'][0]['message']['nlp']:
+							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
+						else:
+							entities = { "none" : 0 }
 						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = send_message(sid, reply(msg, entities)))
 		return "Ok"
 
