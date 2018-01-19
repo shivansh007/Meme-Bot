@@ -21,6 +21,7 @@ def webhook():
 			return "Error"
 	else:
 		data = request.json
+		print(data)
 		if data["object"] == "page":
 			for entry in data["entry"]:
 				for messaging_event in entry["messaging"]:
