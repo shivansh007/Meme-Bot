@@ -112,14 +112,16 @@ def send_image(sid, search):
 	return json.dumps(data)
 
 def get_image(search):
+	try:
 		url = "https://api.imgur.com/3/gallery/search/?q='" + search +" memes'"
 		res = requests.request(url = url, method = 'GET', headers = { "Authorization": "Client-ID e21842678284d02", "Content-Type": "application/json" })
-		# print(url, res.json())
 		if 'error' in res.json()["data"]:
 			return "Error"
 		if 'images' not in res.json()["data"][0]:
 			return "Not Found"
 		return res.json()["data"][0]["images"][0]["link"]
+	except:
+		return "Error"
 
 def get_user_data(rid):
 	FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.6/" + rid + "?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
