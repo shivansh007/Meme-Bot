@@ -87,6 +87,7 @@ def send_image(sid):
 
 def get_image():
 	res = requests.get("https://api.imgur.com/3/gallery/search/?q=memes", headers = { "Authorizaion": "Client-ID e21842678284d02" })
+	print(res.json()["data"][0]["images"])
 	return res.json()["data"][0]["images"][0]["link"]
 # https://api.imgur.com/3/gallery/search/?q=memes
 # Authorizaion Client-ID e21842678284d02
