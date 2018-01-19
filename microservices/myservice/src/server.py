@@ -28,6 +28,8 @@ def webhook():
 					if messaging_event.get("message"):  
 						msg = messaging_event['message']['text']
 						sid = messaging_event['sender']['id']
+						if sid == "171076926997835":
+							return "Ok"
 						rid = messaging_event['recipient']['id']
 						if messaging_event['message'].get('nlp'):
 							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
