@@ -2,9 +2,10 @@ from src import app
 import sys, json, requests
 from flask import jsonify, request, Response
 
-FACEBOOK_VERIFY_TOKEN = "Shivansh"
-FACEBOOK_PAGE_ACCESS_TOKEN = "EAAM3vu6VfC4BAMhnoJvCtSpQxCcBJBzMeBTbJL9crcm9fVdNp6lxPrZC153KbDPHl3ZCQWMSYU6lQbx5C2dByqhFzPw4z0fH4sJAjLF3YqZBlbkALfTT4UFE3F5OZBUOZCyTdZAGGc6W6BQoUwI9fyC9sk8TeYXZCnwBpoHeZCsL7DK8AlJ3MBTL"
+FACEBOOK_VERIFY_TOKEN = "verify_token"
+FACEBOOK_PAGE_ACCESS_TOKEN = "FACEBOOK_PAGE_ACCESS_TOKEN"
 FACEBOOK_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
+imgur_id = 'e21842678284d02'
 
 @app.route("/")
 def index():
@@ -126,7 +127,7 @@ def send_image(sid, search):
 def get_image(search):
 	try:
 		url = "https://api.imgur.com/3/gallery/search/?q='" + search +" memes'"
-		res = requests.request(url = url, method = 'GET', headers = { "Authorization": "Client-ID e21842678284d02", "Content-Type": "application/json" })
+		res = requests.request(url = url, method = 'GET', headers = { "Authorization": "Client-ID " + imgur_id, "Content-Type": "application/json" })
 		if 'error' in res.json()["data"]:
 			return "Error"
 		if 'images' not in res.json()["data"][0]:
