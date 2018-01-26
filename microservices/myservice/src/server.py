@@ -5,7 +5,7 @@ from flask import jsonify, request, Response
 FACEBOOK_VERIFY_TOKEN = "verify_token"
 FACEBOOK_PAGE_ACCESS_TOKEN = "FACEBOOK_PAGE_ACCESS_TOKEN"
 FACEBOOK_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=" + FACEBOOK_PAGE_ACCESS_TOKEN
-imgur_id = 'e21842678284d02'
+imgur_id = 'imgur_id'
 
 @app.route("/")
 def index():
