@@ -8,51 +8,47 @@ FACEBOOK_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=" 
 
 @app.route("/")
 def index():
-	return "Check out MemeBot on Facebook"
+	verify_token = request.args.get('hub.verify_token')
+	challenge = request.args.get('hub.challenge')
+	if verify_token == FACEBOOK_VERIFY_TOKEN:
+		return challenge
+	else:
+		return "Authentication error"
 
 @app.route("/webhook", methods = ['GET', 'POST'])
 def webhook():
-	if request.method == "GET":
-		verify_token = request.args.get('hub.verify_token')
-		challenge = request.args.get('hub.challenge')
-		if verify_token == FACEBOOK_VERIFY_TOKEN:
-			return challenge
-		else:
-			return "Authentication error"
-	else:
-		try:
-			data = request.json
-			if data["object"] == "page":
-				for entry in data["entry"]:
-					for messaging_event in entry["messaging"]:
-						if messaging_event.get("message"):  
-							if 'is_echo' in messaging_event['message'].keys():
-								return "Ok"
-							msg = messaging_event['message']['text']
-							sid = messaging_event['sender']['id']
-							rid = messaging_event['recipient']['id']
-							if messaging_event['message'].get('nlp'):
-								entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
-							else:
-								entities = {}
-							requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply(msg, entities, sid))
-			return "Ok"
-		except:
-			data = {
-				"messaging_type": "RESPONSE",
-				"recipient":
-				{
-					"id": "1899726730051482"
-				},
-				"message":
-				{
-					"text": "Error"
+	try:
+		data = request.json
+		if data["object"] == "page":
+			for entry in data["entry"]:
+				for messaging_event in entry["messaging"]:
+					if messaging_event.get("message"):  
+						if 'is_echo' in messaging_event['message'].keys():
+							return "Ok"
+						msg = messaging_event['message']['text']
+						sid = messaging_event['sender']['id']
+						rid = messaging_event['recipient']['id']
+						if messaging_event['message'].get('nlp'):
+							entities = data['entry'][0]['messaging'][0]['message']['nlp']['entities']
+						else:
+							entities = {}
+						requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = reply(msg, entities, sid))
+		return "Ok"
+	except:
+		data = {
+					"messaging_type": "RESPONSE",
+					"recipient":
+					{
+						"id": "1899726730051482"
+					},
+					"message":
+					{
+						"text": "Error"
+					}
 				}
-			}
-			data = json.dumps(data)
-			requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = data)
-			return "Ok"
-
+		data = json.dumps(data)
+		requests.post(FACEBOOK_SEND_URL, headers = { "Content-Type": "application/json" }, data = data)
+		return "Ok"
 
 def reply(msg, entities, sid):
 	name = get_user_data(sid)
