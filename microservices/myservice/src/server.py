@@ -59,11 +59,11 @@ def reply(msg, entities, sid):
 	for i in entities.keys():
 		nlp[i] = entities[i][0]['confidence']
 	if max(nlp) == "greetings":
-		return send_message(sid, "Hello " + name)
+		return send_message(sid, "Hello, " + name)
 	elif max(nlp) == "thanks":
 		return send_message(sid, "You're welcome!")
 	elif max(nlp) == "bye":
-		return send_message(sid, "See you")
+		return send_message(sid, "See you!")
 	else:
 		return send_message(sid, max(nlp))
 
@@ -120,13 +120,12 @@ def send_image(sid, search):
 			    						      		  }
 			    				         }
 						}
-			}
-	print(data)		
+			}		
 	return json.dumps(data)
 
 def get_image(search):
 	try:
-		url = "https://api.imgur.com/3/gallery/search/?q='" + search +" memes'"
+		url = "https://api.imgur.com/3/gallery/search/?q='" + search + "memes'"
 		res = requests.request(url = url, method = 'GET', headers = { "Authorization": "Client-ID " + imgur_id, "Content-Type": "application/json" })
 		if 'error' in res.json()["data"]:
 			return "Error"
