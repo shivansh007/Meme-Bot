@@ -108,19 +108,18 @@ def send_image(sid, search):
 				}
 			})
 	data = {
-			  "recipient":{
-			    			"id":sid
-						  },
-			  "message":{
-					       "attachment":{
-			    							"type":"image", 
-			    							"payload":{
-			        									"url":img_url, 
-								        				"is_reusable":"True"
-			    						      		  }
-			    				         }
-						}
-			}		
+			  "recipient": {
+			  	"id": sid,						  },
+				"message": {
+					"attachment": {
+			    			"type": "image", 
+			    			"payload": {
+			        			"url": img_url, 
+							"is_reusable": "True"
+			    			}
+			    		}
+				}
+			   }		
 	return json.dumps(data)
 
 def get_image(search):
